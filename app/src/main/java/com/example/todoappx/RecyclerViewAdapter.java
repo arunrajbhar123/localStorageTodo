@@ -1,6 +1,7 @@
 package com.example.todoappx;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import untils.CommonFunctions;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
@@ -51,6 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.title.setPaintFlags(holder.title.getPaintFlags() | (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
 
+        holder.itemView.setBackgroundColor(CommonFunctions.generateRandomColor());
 
     }
 
@@ -75,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             deleteBtn = itemView.findViewById(R.id.imageButton);
 
 
-//            here handling the onChange for CheckBox
+//            Action change isChecked.
 
             isChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -86,7 +93,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         if (b) {
                             title.setPaintFlags(title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         } else {
-                            title.setPaintFlags(title.getPaintFlags() | (~Paint.STRIKE_THRU_TEXT_FLAG));
+                            title.setPaintFlags(title.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                         }
 
                     }
@@ -95,6 +102,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             });
 
 
+//            Action delete items.
+
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Toast.makeText(context, todoLists.get(position).getTitle() + " item is delete ", Toast.LENGTH_SHORT).show();
+                    todoLists.remove(position);
+                    notifyItemRemoved(position);
+
+                }
+            });
+
+
         }
     }
+
+
 }

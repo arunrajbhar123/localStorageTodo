@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TodoAppX</string>
+
+    <string-array name="isCheckedArrayList">
+        <item>True</item>
+        <item>False</item>
+    </string-array>
+
+
 </resources>
